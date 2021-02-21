@@ -14,7 +14,8 @@
 # limitations under the License.
 #
 
-ARG SPARK_IMAGE=gcr.io/spark-operator/spark:v3.0.0
+#ARG SPARK_IMAGE=gcr.io/spark-operator/spark:v3.0.0
+ARG SPARK_IMAGE=harbor.apulis.cn:8443/dataeyes/spark:3.0.1
 
 FROM golang:1.15.2-alpine as builder
 
@@ -25,6 +26,7 @@ COPY go.mod go.mod
 COPY go.sum go.sum
 # Cache deps before building and copying source so that we don't need to re-download as much
 # and so that source changes don't invalidate our downloaded layer
+ENV GOPROXY="https://goproxy.cn"
 RUN go mod download
 
 # Copy the go source code

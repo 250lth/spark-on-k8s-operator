@@ -21,10 +21,12 @@ metadata:
 spec:
   type: Scala
   mode: cluster
-  image: "gcr.io/spark-operator/spark:v3.0.0"
-  imagePullPolicy: Always
+  #image: "gcr.io/spark-operator/spark:v3.0.0"
+  image: "harbor.apulis.cn:8443/dataeyes/spark:3.0.1"
+  #imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
   mainClass: org.apache.spark.examples.SparkPi
-  mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.0.jar"
+  mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.1.jar"
   sparkVersion: "3.0.0"
   restartPolicy:
     type: Never
