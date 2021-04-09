@@ -16,20 +16,23 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: spark-pi
+  name: standby-test
   namespace: default
 spec:
   type: Scala
   mode: cluster
   #image: "gcr.io/spark-operator/spark:v3.0.0"
-  image: "harbor.apulis.cn:8443/dataeyes/spark:3.0.1"
+  image: "harbor.apulis.cn:8443/dataeyes/spark-runner:0.0.1"
   #imagePullPolicy: Always
   imagePullPolicy: IfNotPresent
-  mainClass: org.apache.spark.examples.SparkPi
-  mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.1.jar"
+  #mainClass: org.apache.spark.examples.SparkPi
+  mainClass: com.apulis.sparkwork.StandbyRunner
+  #mainApplicationFile: "local:///opt/spark/examples/jars/spark-examples_2.12-3.0.1.jar"
+  mainApplicationFile: "local:///opt/spark/runners/runner.jar"
   arguments:
-    - "100000"
-  sparkVersion: "3.0.0"
+    - "spark-server-jinlmsft"
+    - "redis://192.168.1.142:6379/0"
+  sparkVersion: "3.0.1"
   restartPolicy:
     type: Never
   volumes:
@@ -40,19 +43,20 @@ spec:
   driver:
     cores: 1
     coreLimit: "1200m"
-    memory: "512m"
+    #memory: "512m"
+    memory: "4096m"
     labels:
-      version: 3.0.0
+      version: 3.0.1
     serviceAccount: spark
     volumeMounts:
       - name: "test-volume"
         mountPath: "/tmp"
   executor:
-    cores: 1
-    instances: 1
-    memory: "512m"
+    cores: 2
+    instances: 2
+    memory: "8192m"
     labels:
-      version: 3.0.0
+      version: 3.0.1
     volumeMounts:
       - name: "test-volume"
         mountPath: "/tmp"
