@@ -15,7 +15,7 @@
 #
 
 #ARG SPARK_IMAGE=gcr.io/spark-operator/spark:v3.0.0
-ARG SPARK_IMAGE=harbor.apulis.cn:8443/dataeyes/spark:3.0.1
+ARG SPARK_IMAGE=harbor.apulis.cn:8443/dataeyes/spark:3.1.1
 
 FROM golang:1.15.2-alpine as builder
 
